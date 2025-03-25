@@ -8,8 +8,12 @@
 //!
 //! ```rust
 //! use ak09916::{blocking::Ak09916, Mode, WhoIAm};
-//! use defmt_03::info;
 //! use embedded_hal::{delay::DelayNs, i2c::I2c};
+//! #
+//! # // Dummy macro
+//! # macro_rules! info {
+//! #    ($($arg:tt)+) => ()
+//! # }
 //!
 //! fn example<I: I2c, D: DelayNs>(i2c: I, delay: D) -> Result<(), I::Error> {
 //!     let mut ak09916 = Ak09916::new(i2c, delay);

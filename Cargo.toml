@@ -24,6 +24,3 @@ defmt-03 = { package = "defmt", version = "0.3", optional = true }
 embedded-hal = "1.0"
 embedded-hal-async = "1.0"
 num_enum = { version = "0.7", default-features = false }
-
-[dev-dependencies]
-defmt-03 = { package = "defmt", version = "0.3" }
