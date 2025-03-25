@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: Joonas Javanainen <joonas.javanainen@gmail.com>
+# SPDX-FileCopyrightText: Joonas Javanainen <joonas@merulogic.com>
 #
 # SPDX-License-Identifier: MIT OR Apache-2.0
 
@@ -6,11 +6,11 @@
 name = "ak09916"
 version = "0.1.0"
 edition = "2021"
-authors = ["Joonas Javanainen <joonas.javanainen@gmail.com>"]
+authors = ["Joonas Javanainen <joonas@merulogic.com>"]
 rust-version = "1.75"
 description = "AKM AK09916 3-axis magnetometer driver"
-homepage = "https://github.com/Gekkio/ak09916"
-repository = "https://github.com/Gekkio/ak09916"
+homepage = "https://github.com/merulogic/ak09916"
+repository = "https://github.com/merulogic/ak09916"
 license = "MIT OR Apache-2.0"
 keywords = ["AK09916", "magnetometer", "driver", "i2c"]
 categories = ["embedded", "hardware-support", "no-std"]

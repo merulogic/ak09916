@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: Joonas Javanainen <joonas.javanainen@gmail.com>
+SPDX-FileCopyrightText: Joonas Javanainen <joonas@merulogic.com>
 
 SPDX-License-Identifier: MIT OR Apache-2.0
 -->

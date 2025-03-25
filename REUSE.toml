@@ -1,0 +1,5 @@
+version = 1
+SPDX-PackageName = "ak09916"
+SPDX-PackageSupplier = "Joonas Javanainen <joonas@merulogic.com>"
+SPDX-PackageDownloadLocation = "https://github.com/merulogic/ak09916"
+annotations = []
