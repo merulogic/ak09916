@@ -16,8 +16,8 @@ keywords = ["AK09916", "magnetometer", "driver", "i2c"]
 categories = ["embedded", "hardware-support", "no-std"]
 
 [dependencies]
-bitflags = "2.5.0"
-defmt = "0.3.5"
+bitflags = "2.9.0"
+defmt = "0.3.10"
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"
-num_enum = { version = "0.7.2", default-features = false }
+num_enum = { version = "0.7.3", default-features = false }
