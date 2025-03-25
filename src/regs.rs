@@ -5,6 +5,9 @@
 //! Low-level register definitions
 use num_enum::{IntoPrimitive, TryFromPrimitive};
 
+#[cfg(feature = "defmt-03")]
+use crate::defmt;
+
 use super::Mode;
 
 /// Register address
@@ -49,6 +52,7 @@ pub enum RegisterAddress {
     Ts2 = 0x34,
 }
 
+#[cfg(feature = "defmt-03")]
 impl defmt::Format for RegisterAddress {
     fn format(&self, fmt: defmt::Formatter) {
         u8::from(*self).format(fmt)
@@ -107,7 +111,8 @@ macro_rules! impl_bitflags_reg8 {
 
 /// Who I Am 1 (Company ID)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Wia1(
     /// Company ID
     pub u8,
@@ -122,7 +127,8 @@ impl_transparent_reg8!(Wia1, RegisterAddress::Wia1);
 
 /// Who I Am 2 (Device ID)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Wia2(
     /// Device ID
     pub u8,
@@ -135,6 +141,19 @@ impl Wia2 {
 
 impl_transparent_reg8!(Wia2, RegisterAddress::Wia2);
 
+#[cfg(not(feature = "defmt-03"))]
+bitflags::bitflags! {
+    /// Status 1
+    #[repr(transparent)]
+    pub struct St1: u8 {
+        /// Data Overrun
+        const DOR = 1 << 1;
+        /// Data Ready
+        const DRDY = 1 << 0;
+    }
+}
+
+#[cfg(feature = "defmt-03")]
 defmt::bitflags! {
     /// Status 1
     #[repr(transparent)]
@@ -150,7 +169,8 @@ impl_bitflags_reg8!(St1, RegisterAddress::St1);
 
 /// Measurement Magnetic Data (X axis, LSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hxl(
     /// X-axis measurement data (LSB)
     pub u8,
@@ -160,7 +180,8 @@ impl_transparent_reg8!(Hxl, RegisterAddress::Hxl);
 
 /// Measurement Magnetic Data (X axis, MSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hxh(
     /// X-axis measurement data (MSB)
     pub u8,
@@ -170,7 +191,8 @@ impl_transparent_reg8!(Hxh, RegisterAddress::Hxh);
 
 /// Measurement Magnetic Data (X axis)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hx(
     /// X-axis measurement data
     pub i16,
@@ -194,7 +216,8 @@ impl From<Hx> for i16 {
 
 /// Measurement Magnetic Data (Y axis, LSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hyl(
     /// Y-axis measurement data (LSB)
     pub u8,
@@ -204,7 +227,8 @@ impl_transparent_reg8!(Hyl, RegisterAddress::Hyl);
 
 /// Measurement Magnetic Data (Y axis, MSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hyh(
     /// Y-axis measurement data (MSB)
     pub u8,
@@ -214,7 +238,8 @@ impl_transparent_reg8!(Hyh, RegisterAddress::Hyh);
 
 /// Measurement Magnetic Data (Y axis)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hy(
     /// Y-axis measurement data
     pub i16,
@@ -238,7 +263,8 @@ impl From<Hy> for i16 {
 
 /// Measurement Magnetic Data (Z axis, LSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hzl(
     /// Z-axis measurement data (LSB)
     pub u8,
@@ -248,7 +274,8 @@ impl_transparent_reg8!(Hzl, RegisterAddress::Hzl);
 
 /// Measurement Magnetic Data (Z axis, MSB)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hzh(
     /// Z-axis measurement data (MSB)
     pub u8,
@@ -258,7 +285,8 @@ impl_transparent_reg8!(Hzh, RegisterAddress::Hzh);
 
 /// Measurement Magnetic Data (Z axis)
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Hz(
     /// Z-axis measurement data
     pub i16,
@@ -280,6 +308,23 @@ impl From<Hz> for i16 {
     }
 }
 
+#[cfg(not(feature = "defmt-03"))]
+bitflags::bitflags! {
+    /// Status 2
+    #[repr(transparent)]
+    pub struct St2: u8 {
+        /// Reserved
+        const RSV30 = 1 << 6;
+        /// Reserved
+        const RSV29 = 1 << 5;
+        /// Reserved
+        const RSV28 = 1 << 4;
+        /// Magnetic sensor overflow
+        const HOFL = 1 << 3;
+    }
+}
+
+#[cfg(feature = "defmt-03")]
 defmt::bitflags! {
     /// Status 2
     #[repr(transparent)]
@@ -312,7 +357,8 @@ impl From<St2> for u8 {
 }
 
 /// Operation mode setting
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum ModeRegister {
     Mode(Mode),
     Other(u8),
@@ -338,7 +384,8 @@ impl From<ModeRegister> for u8 {
 
 /// Control 2
 #[repr(transparent)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Cntl2(
     /// Operation mode setting
     pub ModeRegister,
@@ -366,6 +413,17 @@ impl From<Cntl2> for u8 {
     }
 }
 
+#[cfg(not(feature = "defmt-03"))]
+bitflags::bitflags! {
+    /// Control 3
+    #[repr(transparent)]
+    pub struct Cntl3: u8 {
+        /// Soft reset
+        const SRST = 1 << 0;
+    }
+}
+
+#[cfg(feature = "defmt-03")]
 defmt::bitflags! {
     /// Control 3
     #[repr(transparent)]
@@ -392,7 +450,8 @@ impl From<Cntl3> for u8 {
 }
 
 /// Full dump of non-reserved registers and their bits
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct RegisterDump {
     pub company_id: Wia1,
     pub device_id: Wia2,

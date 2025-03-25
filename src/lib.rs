@@ -8,7 +8,7 @@
 //!
 //! ```rust
 //! use ak09916::{blocking::Ak09916, Mode, WhoIAm};
-//! use defmt::info;
+//! use defmt_03::info;
 //! use embedded_hal::{delay::DelayNs, i2c::I2c};
 //!
 //! fn example<I: I2c, D: DelayNs>(i2c: I, delay: D) -> Result<(), I::Error> {
@@ -48,6 +48,9 @@
 
 #![no_std]
 
+#[cfg(feature = "defmt-03")]
+use defmt_03 as defmt;
+
 pub mod regs;
 
 use num_enum::{IntoPrimitive, TryFromPrimitive};
@@ -66,7 +69,8 @@ pub const MODE_SET_WAIT_TIME_US: u32 = 100;
 pub const SENSITIVITY_NT_PER_BIT: i32 = 150;
 
 /// Who I Am register data
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct WhoIAm {
     /// Company ID
     pub company_id: u8,
@@ -84,7 +88,8 @@ impl WhoIAm {
 
 /// Operation mode setting
 #[repr(u8)]
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format, TryFromPrimitive, IntoPrimitive)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, TryFromPrimitive, IntoPrimitive)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub enum Mode {
     /// Power-down mode
     PowerDown = 0b00000,
@@ -114,7 +119,8 @@ impl Mode {
 }
 
 /// Measurement data
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct Measurement {
     /// X-axis (raw value)
     pub hx: i16,
@@ -167,6 +173,19 @@ impl Measurement {
     }
 }
 
+#[cfg(not(feature = "defmt-03"))]
+bitflags::bitflags! {
+    /// Measurement flags
+    #[repr(transparent)]
+    pub struct MeasurementFlags: u8 {
+        /// Magnetic sensor overflow
+        const OVERFLOW = 1 << 3;
+        /// Data overrun
+        const OVERRUN = 1 << 1;
+    }
+}
+
+#[cfg(feature = "defmt-03")]
 defmt::bitflags! {
     /// Measurement flags
     #[repr(transparent)]
@@ -179,7 +198,8 @@ defmt::bitflags! {
 }
 
 /// Result for a self-test
-#[derive(Copy, Clone, Debug, PartialEq, Eq, defmt::Format)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
 pub struct SelfTestResult {
     /// Measurement data
     pub measurement: Measurement,
