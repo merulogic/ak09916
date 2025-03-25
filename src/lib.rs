@@ -9,6 +9,8 @@
 //! ```rust
 //! use ak09916::{blocking::Ak09916, Mode, WhoIAm};
 //! use embedded_hal::{delay::DelayNs, i2c::I2c};
+//! // This example assumes something like defmt is available for logging:
+//! // use defmt::info;
 //! #
 //! # // Dummy macro
 //! # macro_rules! info {
