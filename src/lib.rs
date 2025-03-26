@@ -57,6 +57,12 @@
 #[cfg(feature = "defmt-03")]
 use defmt_03 as defmt;
 
+#[cfg(not(feature = "defmt-03"))]
+use bitflags::bitflags as bitflags_macro;
+
+#[cfg(feature = "defmt-03")]
+use crate::defmt::bitflags as bitflags_macro;
+
 pub mod regs;
 
 use num_enum::{IntoPrimitive, TryFromPrimitive};
@@ -179,20 +185,7 @@ impl Measurement {
     }
 }
 
-#[cfg(not(feature = "defmt-03"))]
-bitflags::bitflags! {
-    /// Measurement flags
-    #[repr(transparent)]
-    pub struct MeasurementFlags: u8 {
-        /// Magnetic sensor overflow
-        const OVERFLOW = 1 << 3;
-        /// Data overrun
-        const OVERRUN = 1 << 1;
-    }
-}
-
-#[cfg(feature = "defmt-03")]
-defmt::bitflags! {
+bitflags_macro! {
     /// Measurement flags
     #[repr(transparent)]
     pub struct MeasurementFlags: u8 {

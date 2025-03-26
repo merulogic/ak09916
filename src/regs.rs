@@ -8,6 +8,12 @@ use num_enum::{IntoPrimitive, TryFromPrimitive};
 #[cfg(feature = "defmt-03")]
 use crate::defmt;
 
+#[cfg(not(feature = "defmt-03"))]
+use bitflags::bitflags as bitflags_macro;
+
+#[cfg(feature = "defmt-03")]
+use crate::defmt::bitflags as bitflags_macro;
+
 use super::Mode;
 
 /// Register address
@@ -141,20 +147,7 @@ impl Wia2 {
 
 impl_transparent_reg8!(Wia2, RegisterAddress::Wia2);
 
-#[cfg(not(feature = "defmt-03"))]
-bitflags::bitflags! {
-    /// Status 1
-    #[repr(transparent)]
-    pub struct St1: u8 {
-        /// Data Overrun
-        const DOR = 1 << 1;
-        /// Data Ready
-        const DRDY = 1 << 0;
-    }
-}
-
-#[cfg(feature = "defmt-03")]
-defmt::bitflags! {
+bitflags_macro! {
     /// Status 1
     #[repr(transparent)]
     pub struct St1: u8 {
@@ -308,24 +301,7 @@ impl From<Hz> for i16 {
     }
 }
 
-#[cfg(not(feature = "defmt-03"))]
-bitflags::bitflags! {
-    /// Status 2
-    #[repr(transparent)]
-    pub struct St2: u8 {
-        /// Reserved
-        const RSV30 = 1 << 6;
-        /// Reserved
-        const RSV29 = 1 << 5;
-        /// Reserved
-        const RSV28 = 1 << 4;
-        /// Magnetic sensor overflow
-        const HOFL = 1 << 3;
-    }
-}
-
-#[cfg(feature = "defmt-03")]
-defmt::bitflags! {
+bitflags_macro! {
     /// Status 2
     #[repr(transparent)]
     pub struct St2: u8 {
@@ -413,18 +389,7 @@ impl From<Cntl2> for u8 {
     }
 }
 
-#[cfg(not(feature = "defmt-03"))]
-bitflags::bitflags! {
-    /// Control 3
-    #[repr(transparent)]
-    pub struct Cntl3: u8 {
-        /// Soft reset
-        const SRST = 1 << 0;
-    }
-}
-
-#[cfg(feature = "defmt-03")]
-defmt::bitflags! {
+bitflags_macro! {
     /// Control 3
     #[repr(transparent)]
     pub struct Cntl3: u8 {
