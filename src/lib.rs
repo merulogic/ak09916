@@ -54,13 +54,13 @@
 
 #![no_std]
 
-#[cfg(feature = "defmt-03")]
+#[cfg(feature = "defmt-1")]
 use defmt_03 as defmt;
 
-#[cfg(not(feature = "defmt-03"))]
+#[cfg(not(feature = "defmt-1"))]
 use bitflags::bitflags as bitflags_macro;
 
-#[cfg(feature = "defmt-03")]
+#[cfg(feature = "defmt-1")]
 use crate::defmt::bitflags as bitflags_macro;
 
 pub mod regs;
@@ -82,7 +82,7 @@ pub const SENSITIVITY_NT_PER_BIT: i32 = 150;
 
 /// Who I Am register data
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt-1", derive(defmt::Format))]
 pub struct WhoIAm {
     /// Company ID
     pub company_id: u8,
@@ -101,7 +101,7 @@ impl WhoIAm {
 /// Operation mode setting
 #[repr(u8)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, TryFromPrimitive, IntoPrimitive)]
-#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt-1", derive(defmt::Format))]
 pub enum Mode {
     /// Power-down mode
     PowerDown = 0b00000,
@@ -132,7 +132,7 @@ impl Mode {
 
 /// Measurement data
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt-1", derive(defmt::Format))]
 pub struct Measurement {
     /// X-axis (raw value)
     pub hx: i16,
@@ -198,7 +198,7 @@ bitflags_macro! {
 
 /// Result for a self-test
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]
-#[cfg_attr(feature = "defmt-03", derive(defmt::Format))]
+#[cfg_attr(feature = "defmt-1", derive(defmt::Format))]
 pub struct SelfTestResult {
     /// Measurement data
     pub measurement: Measurement,

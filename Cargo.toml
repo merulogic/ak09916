@@ -16,11 +16,11 @@ keywords = ["AK09916", "magnetometer", "driver", "i2c"]
 categories = ["embedded", "hardware-support", "no-std"]
 
 [features]
-defmt-03 = ["dep:defmt-03"]
+defmt-1 = ["dep:defmt-1"]
 
 [dependencies]
 bitflags = "1.3"
-defmt-03 = { package = "defmt", version = "0.3", optional = true }
+defmt-1 = { package = "defmt", version = "1.0", optional = true }
 embedded-hal = "1.0"
 embedded-hal-async = "1.0"
 num_enum = { version = "0.7", default-features = false }
