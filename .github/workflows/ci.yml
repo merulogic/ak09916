@@ -25,7 +25,7 @@ jobs:
       - name: Run checks
         run: |
           cargo check --all --all-targets
-          cargo check --all --all-targets -F defmt-03
+          cargo check --all --all-targets -F defmt-1
       - name: Check formatting
         run: cargo fmt --all -- --check
       - name: Run clippy
@@ -49,16 +49,16 @@ jobs:
       - name: Build
         run: |
           cargo build --all
-          cargo build --all -F defmt-03
+          cargo build --all -F defmt-1
       - name: Build (thumbv6m-none-eabi)
         run: |
           rustup target add thumbv6m-none-eabi
           cargo build --all --target thumbv6m-none-eabi
-          cargo build --all --target thumbv6m-none-eabi -F defmt-03
+          cargo build --all --target thumbv6m-none-eabi -F defmt-1
       - name: Build (riscv32i-unknown-none-elf)
         run: |
           rustup target add riscv32i-unknown-none-elf
           cargo build --all --target riscv32i-unknown-none-elf
-          cargo build --all --target riscv32i-unknown-none-elf -F defmt-03
+          cargo build --all --target riscv32i-unknown-none-elf -F defmt-1
       - name: Test
         run: cargo test --all
