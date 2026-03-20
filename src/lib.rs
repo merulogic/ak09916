@@ -55,7 +55,7 @@
 #![no_std]
 
 #[cfg(feature = "defmt-1")]
-use defmt_03 as defmt;
+use defmt_1 as defmt;
 
 #[cfg(not(feature = "defmt-1"))]
 use bitflags::bitflags as bitflags_macro;
